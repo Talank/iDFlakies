@@ -98,4 +98,36 @@ public class DetectorUtil {
         }
         return result;
     }
+
+    // public static TestRunResult runOrderMultipleTimes(final List<String> order, final Runner runner, int numTries, boolean allMustPass) {
+    //     System.out.println("[INFO] Running given order " + numTries + " times. (" + order.size() + " tests).");
+
+    //     TestRunResult result = null;
+
+    //     boolean allPassing = false;
+    //     // Try to run it multiple times, to see if we can get everything to pass (except for ignored tests)
+    //     for (int i = 0; i < numTries; i++) {
+    //         result = runner.runList(order).get();
+
+    //         try {
+    //             Files.write(PathManager.originalResultsLog(), (result.id() + "\n").getBytes(),
+    //                     Files.exists(PathManager.originalResultsLog()) ? StandardOpenOption.APPEND : StandardOpenOption.CREATE);
+    //         } catch (IOException ignored) {}
+
+    //         if (allPass(result)) {
+    //             allPassing = true;
+    //             break;
+    //         }
+    //     }
+
+    //     if (!allPassing) {
+    //         if (allMustPass) {
+    //             throw new NoPassingOrderException("No passing order for tests (" + numTries + " runs)");
+    //         } else {
+    //             Logger.getGlobal().log(Level.INFO, "No passing order for tests (" + numTries + " runs). Continuing anyway with last run.");
+    //         }
+    //     }
+
+    //     return result;
+    // }
 }

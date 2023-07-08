@@ -29,23 +29,31 @@ public class RandomDetector extends ExecutingDetector {
         this.origResult = DetectorUtil.originalResults(tests, runner);
 
         // Filters to be applied in order
-        if (runner instanceof InstrumentingSmartRunner) {
-            addFilter(new ConfirmationFilter(name, tests, (InstrumentingSmartRunner) runner));
-        } else {
-            addFilter(new ConfirmationFilter(name, tests, InstrumentingSmartRunner.fromRunner(runner, baseDir)));
-        }
+        // if (runner instanceof InstrumentingSmartRunner) {
+        //     addFilter(new ConfirmationFilter(name, tests, (InstrumentingSmartRunner) runner));
+        // } else {
+        //     addFilter(new ConfirmationFilter(name, tests, InstrumentingSmartRunner.fromRunner(runner, baseDir)));
+        // }
 
         addFilter(new UniqueFilter());
     }
 
     @Override
     public DetectionRound results() throws Exception {
-        lastRandomResult = runList(testShuffler.shuffledOrder(absoluteRound.get(),
+        System.out.println("[TALANK] Running random detector");
+        // final int numTries = 3;  // Number of attempts for each random round
+        // testOrders = new ArrayList<>();
+        final int numTries = Configuration.config().getProperty("dt.detector.random_order.retry_count", 3);
+        List<String> randomOrder = testShuffler.shuffledOrder(absoluteRound.get(),
                                                               lastRandomResult,
                                                               // if last detection round didn't find any *new* OD test, then reverse the last (likely passing) order
-                                                              lastRandomDetectionRound == null || lastRandomResult == null || lastRandomDetectionRound.filteredTests().size() != 0));
-        // if we want to reverse a run with no failures or errors, then replace the line above with the following
-        // lastRandomResult.results().values().stream().anyMatch(testResult -> testResult.result() == Result.FAILURE || testResult.result() == Result.ERROR)
+                                                              lastRandomDetectionRound == null || lastRandomResult == null || lastRandomDetectionRound.filteredTests().size() != 0);
+        for (int i = 0; i < numTries; i++) {
+            System.out.println("[TALANK] Running random detector, try " + i);
+            lastRandomResult = runList(randomOrder);
+            // if we want to reverse a run with no failures or errors, then replace the line above with the following
+            // lastRandomResult.results().values().stream().anyMatch(testResult -> testResult.result() == Result.FAILURE || testResult.result() == Result.ERROR)
+        }
         lastRandomDetectionRound = makeDts(origResult, lastRandomResult);
         return lastRandomDetectionRound;
     }

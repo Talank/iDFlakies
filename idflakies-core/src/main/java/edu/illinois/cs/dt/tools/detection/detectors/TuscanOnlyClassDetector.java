@@ -46,11 +46,11 @@ public class TuscanOnlyClassDetector extends ExecutingDetector {
         this.tests = tests;
         this.testShuffler = new TestShuffler(type, rounds, tests, baseDir);
         this.origResult = DetectorUtil.originalResults(tests, runner);
-        if (runner instanceof InstrumentingSmartRunner) {
-            addFilter(new ConfirmationFilter(name, tests, (InstrumentingSmartRunner) runner));
-        } else {
-            addFilter(new ConfirmationFilter(name, tests, InstrumentingSmartRunner.fromRunner(runner, baseDir)));
-        }
+        // if (runner instanceof InstrumentingSmartRunner) {
+        //     addFilter(new ConfirmationFilter(name, tests, (InstrumentingSmartRunner) runner));
+        // } else {
+        //     addFilter(new ConfirmationFilter(name, tests, InstrumentingSmartRunner.fromRunner(runner, baseDir)));
+        // }
         addFilter(new UniqueFilter());
     }
 

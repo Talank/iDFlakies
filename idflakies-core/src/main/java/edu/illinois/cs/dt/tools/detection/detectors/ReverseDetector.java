@@ -26,11 +26,11 @@ public class ReverseDetector extends ExecutingDetector {
         testShuffler = new TestShuffler(name, rounds, tests, baseDir);
 
         // Filters to be applied in order
-        if (runner instanceof InstrumentingSmartRunner) {
-            addFilter(new ConfirmationFilter(name, tests, (InstrumentingSmartRunner) runner));
-        } else {
-            addFilter(new ConfirmationFilter(name, tests, InstrumentingSmartRunner.fromRunner(runner, baseDir)));
-        }
+        // if (runner instanceof InstrumentingSmartRunner) {
+        //     addFilter(new ConfirmationFilter(name, tests, (InstrumentingSmartRunner) runner));
+        // } else {
+        //     addFilter(new ConfirmationFilter(name, tests, InstrumentingSmartRunner.fromRunner(runner, baseDir)));
+        // }
         addFilter(new UniqueFilter());
     }
 
