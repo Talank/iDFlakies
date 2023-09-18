@@ -43,7 +43,7 @@ public class RandomDetector extends ExecutingDetector {
         System.out.println("[TALANK] Running random detector");
         // final int numTries = 3;  // Number of attempts for each random round
         // testOrders = new ArrayList<>();
-        final int numTries = Configuration.config().getProperty("dt.detector.random_order.retry_count", 3);
+        final int numTries = 3;
         List<String> randomOrder = testShuffler.shuffledOrder(absoluteRound.get(),
                                                               lastRandomResult,
                                                               // if last detection round didn't find any *new* OD test, then reverse the last (likely passing) order
